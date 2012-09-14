@@ -2,7 +2,7 @@
 
 Self-contained, self-rendering, self-validating forms that can only output valid data.
 
-##Step #1: Define your fields, include as many validation tests that you want:
+##Step #1: Define your fields, include as many validation tests that you want for each field:
 
 ```javascript
 var f = new Reformer({
@@ -22,6 +22,12 @@ var f = new Reformer({
             return false;
           },
           message: 'something will always go wrong'
+        },
+        {
+          test: function (val) {
+            return val && val.toString().length > 2;
+          },
+          message: 'Must be at least three characters.'
         }
       ],
       required: true
@@ -48,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 reformer will handle form submit, and call your callback if everything's happy.
 
-##Bonus Step #4: Asynchronous validation
+##Bonus Step #3: Asynchronous validation
 
 You know how you've always got that one field that needs to be checked via ajax. It's a pain. Because most of your tests are simple regexes that can be run synchronously except for this one stupid ajax call to check if a username is available. So, just do this:
 

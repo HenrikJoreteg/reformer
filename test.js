@@ -7,15 +7,20 @@ var f = new Reformer({
       required: true
     },
     {
-      name: 'email',
-      label: 'Email Address',
-      type: 'email',
+      name: 'last_name',
+      label: 'Last Name',
       tests: [
         {
           test: function (val) {
             return false;
           },
-          message: 'this test will always fail'
+          message: 'something will always go wrong'
+        },
+        {
+          test: function (val) {
+            return val && val.toString().length > 2;
+          },
+          message: 'Must be at least three characters.'
         }
       ],
       required: true
