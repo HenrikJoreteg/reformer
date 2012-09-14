@@ -1,0 +1,31 @@
+- var ifDef = function (thing) {return (typeof thing !== 'undefined') ? thing : ''}
+form(id = ifDef(id) + '_form')
+  for field in fields
+    - var fieldId = (typeof field.id !== 'undefined') ? field.id : field.name
+    div.fieldContainer.clearfix(id = fieldId + '_parent')
+      for error in field.errors
+        span.error!= error
+      if (field.label)
+        label(for=fieldId)= field.label
+      if (field.textarea)
+        textarea(id = fieldId)
+      if (field.input)
+        input(
+          id = fieldId, 
+          min = ifDef(field.min), 
+          max = (typeof field.max !== 'undefined') ? max : null,
+          step = (typeof field.step !== 'undefined') ? step : null,
+          placeholder = field.placeholder,
+          type = field.type,
+          name = field.name,
+          value = field.value
+        )
+      if (field.select)
+        select(id = fieldId, name = field.name, class = field.class)
+          for option in field.options
+            option(value = option.val)= option.text
+      if (field.helptext)
+        p.helptext(id = fieldId + '_helptext')
+  .clearfix
+  button.submit(type = 'submit')= (typeof submitText !== 'undefined') ? submitText : 'Submit'
+  button.cancel(type = 'reset')= (typeof cancelText !== 'undefined') ? cancelText : 'Cancel'

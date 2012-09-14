@@ -1,0 +1,19 @@
+{
+    "name": "specform",
+    "version": "0.0.1",
+    "author": "Henrik Joreteg <henrik@andyet.net>",
+    "description": "Define your form in JS, generate self-managed, self-validating form.",
+    "dependencies": {
+        "jade": "",
+        "uglify-js": "",
+        "underscore": "",
+        "colors": "",
+        "yetify": ""
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HenrikJoreteg/templatizer.git"
+    },
+    "keywords": ["templates", "browser", "jade"],
+    "main": "formbot.js"
+}
