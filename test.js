@@ -1,4 +1,4 @@
-var f = new FormBot({
+var f = new Reformer({
   fields: [
     {
       name: 'first_name',

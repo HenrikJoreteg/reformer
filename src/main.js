@@ -4,7 +4,7 @@
 
   var template = {{{templatefunc}}}
 
-  var FormBot = function (spec) {
+  var Reformer = function (spec) {
     var f = function () {}, // empty func
       item;
       
@@ -52,7 +52,7 @@
     });
   };
   
-  FormBot.prototype.render = function () {
+  Reformer.prototype.render = function () {
     var self = this;
     if (!this.dom) {
       this.dom = this.domify(template(this));
@@ -85,7 +85,7 @@
     return this.dom;
   };
   
-  FormBot.prototype.addButtonHandlers = function () {
+  Reformer.prototype.addButtonHandlers = function () {
     var self = this,
       buttons = this.dom.getElementsByTagName('button', this.dom),
       i = 0,
@@ -113,7 +113,7 @@
     }
   };
   
-  FormBot.prototype.handleSubmit = function (e) {
+  Reformer.prototype.handleSubmit = function (e) {
     var self = this;
     if (self.settings.preSubmit) self.settings.preSubmit.call(self);
     this.validate(function (valid) {
@@ -127,7 +127,7 @@
     });
   };
   
-  FormBot.prototype.data = function () {
+  Reformer.prototype.data = function () {
     var results = {};
     this.fields.forEach(function (field) {
       // trim if setting and available for brower and value type
@@ -139,7 +139,7 @@
     return results;
   };
   
-  FormBot.prototype.diffData = function (newData) {
+  Reformer.prototype.diffData = function (newData) {
     var orig = this.initialData,
       diff = {},
       changed;
@@ -154,7 +154,7 @@
   
   // this way we just store the value in memory away from the dom
   // then we can re-render whenever we want, without losing the value
-  FormBot.prototype.handleInputChange =  function (e) {
+  Reformer.prototype.handleInputChange =  function (e) {
     var target = e.target,
         type = target.field.type;
     target.field.value = function () {
@@ -168,7 +168,7 @@
     }();
   };
   
-  FormBot.prototype.clearAll = function () {
+  Reformer.prototype.clearAll = function () {
     this.fields.forEach(function (field) {
       field.inputEl.value = '';
       field.errors = [];
@@ -176,7 +176,7 @@
     return true;
   };
   
-  FormBot.prototype.validate = function (cb) {
+  Reformer.prototype.validate = function (cb) {
     var self = this,
       isValid = true;
     
@@ -225,7 +225,7 @@
     });
   };
   
-  FormBot.prototype.storeDomRef = function () {
+  Reformer.prototype.storeDomRef = function () {
     var self = this;
     this.fields.forEach(function (field) {
       field.inputEl = self.dom.querySelector('[name="'+ field.name +'"]');
@@ -234,7 +234,7 @@
     });
   };
   
-  FormBot.prototype.domify = function (str) {
+  Reformer.prototype.domify = function (str) {
     var div = document.createElement('div');
     div.innerHTML = str;
     return div.querySelector('form');
@@ -242,7 +242,7 @@
   
   // from caolan's async.js lib
   // async.forEach method
-  FormBot.prototype.asyncForEach = function (arr, iterator, cb) {
+  Reformer.prototype.asyncForEach = function (arr, iterator, cb) {
     if (!arr.length) return cb();
     var completed = 0;
     arr.forEach(function (x) {
@@ -260,8 +260,8 @@
     });
   };
   
-  FormBot.prototype.submitRe = /(^|\s)submit(\s|$)/;
-  FormBot.prototype.cancelRe = /(^|\s)cancel(\s|$)/;
+  Reformer.prototype.submitRe = /(^|\s)submit(\s|$)/;
+  Reformer.prototype.cancelRe = /(^|\s)cancel(\s|$)/;
   
-  window.FormBot = FormBot;
+  window.Reformer = Reformer;
 })(window);

@@ -23,7 +23,7 @@ templatefunc = beautify(jade.compile(fs.readFileSync(__dirname + '/src/template.
 main = fs.readFileSync(__dirname + '/src/main.js', 'utf-8').toString().replace("{{{templatefunc}}}", templatefunc);
 main = main.replace("{{{jaderuntime}}}", jadeRuntime);
 
-fs.writeFileSync('specform.js', main);
+fs.writeFileSync('reformer.js', main);
 
 
 var ast = uglify.parser.parse(main),
@@ -34,4 +34,4 @@ ast = pro.ast_mangle(ast); // get a new AST with mangled names
 ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
 minified = pro.gen_code(ast); // build out the code
 
-fs.writeFileSync('specform.min.js', minified);
+fs.writeFileSync('reformer.min.js', minified);

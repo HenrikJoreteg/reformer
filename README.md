@@ -1,22 +1,11 @@
-#FormBot
+#reformer
 
-##Step #1: Define your template (with ICanHaz.js):
+Self-contained, self-rendering, self-validating forms that can only output valid data.
 
-```html
-<form>
-  {{#fields}}
-  {{#errors}}<span class="error">{{.}}</span>{{/errors}}
-  <label for="{{id}}">{{label}}</label>
-  <input id="{{id}}" {{#placeholder}}placeholder="{{placeholder}}"{{/placeholder}} type="{{type}}" name="{{name}}" value="{{value}}"/>      
-  {{/fields}}
-  <button>Submit</button>
-</form>
-```
-
-##Step #2: Define your fields, include as many validation tests that you want:
+##Step #1: Define your fields, include as many validation tests that you want:
 
 ```javascript
-var f = new Form({
+var f = new Reformer({
   fields: [
     {
       name: 'first_name',
@@ -48,7 +37,7 @@ var f = new Form({
 ```
 
 
-##Step #3: Render it once. It handles itself after that:
+##Step #2: Render it once. It handles itself after that:
    
 ```javascript 
 document.addEventListener('DOMContentLoaded', function () {
@@ -57,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
 ```
 
 
-FormBot will handle form submit, and call your callback if everything's happy.
+reformer will handle form submit, and call your callback if everything's happy.
 
 ##Bonus Step #4: Asynchronous validation
 
