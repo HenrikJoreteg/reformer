@@ -2,7 +2,7 @@
 
 Self-contained, self-rendering, self-validating forms that can only output valid data.
 
-##Step #1: Define your fields, include as many validation tests that you want for each field:
+##Step #1: Define your fields, with as many tests as you want for each field:
 
 ```javascript
 var f = new Reformer({
