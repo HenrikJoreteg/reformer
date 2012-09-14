@@ -1,5 +1,5 @@
 {
-    "name": "specform",
+    "name": "reformer",
     "version": "0.0.1",
     "author": "Henrik Joreteg <henrik@andyet.net>",
     "description": "Define your form in JS, generate self-managed, self-validating form.",
@@ -12,8 +12,8 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/HenrikJoreteg/templatizer.git"
+        "url": "https://github.com/HenrikJoreteg/reformer.git"
     },
-    "keywords": ["templates", "browser", "jade"],
-    "main": "formbot.js"
+    "keywords": ["form", "browser", "jade"],
+    "main": "reformer.js"
 }
