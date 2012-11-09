@@ -6,6 +6,7 @@ Self-contained, self-rendering, self-validating forms that can only output valid
 
 ```javascript
 var f = new Reformer({
+  submitText: 'Submit this form!',
   fields: [
     {
       name: 'first_name',
