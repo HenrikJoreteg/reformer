@@ -5,7 +5,7 @@
     "description": "Self-contained, self-rendering, self-validating forms that can only output valid data.",
     "dependencies": {
         "jade": "",
-        "uglify-js": "",
+        "uglify-js": "1.x",
         "underscore": "",
         "colors": "",
         "yetify": ""

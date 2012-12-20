@@ -44,7 +44,9 @@
                                 buf.push("</span>");
                             }
                         } else {
+                            var $l = 0;
                             for (var $index in field.errors) {
+                                $l++;
                                 var error = field.errors[$index];
                                 buf.push('<span class="error">');
                                 var __val__ = error;
@@ -68,9 +70,11 @@
                     if (field.textarea) {
                         buf.push("\n    <textarea");
                         buf.push(attrs({
-                            id: fieldId
+                            id: fieldId,
+                            name: field.name
                         }, {
-                            id: true
+                            id: true,
+                            name: true
                         }));
                         buf.push("></textarea>");
                     }
@@ -125,7 +129,9 @@
                                     buf.push("</option>");
                                 }
                             } else {
+                                var $l = 0;
                                 for (var $index in field.options) {
+                                    $l++;
                                     var option = field.options[$index];
                                     buf.push("\n      <option");
                                     buf.push(attrs({
@@ -155,7 +161,9 @@
                     buf.push("\n  </div>");
                 }
             } else {
+                var $l = 0;
                 for (var $index in fields) {
+                    $l++;
                     var field = fields[$index];
                     var fieldId = typeof field.id !== "undefined" ? field.id : field.name;
                     buf.push("\n  <div");
@@ -176,7 +184,9 @@
                                 buf.push("</span>");
                             }
                         } else {
+                            var $l = 0;
                             for (var $index in field.errors) {
+                                $l++;
                                 var error = field.errors[$index];
                                 buf.push('<span class="error">');
                                 var __val__ = error;
@@ -200,9 +210,11 @@
                     if (field.textarea) {
                         buf.push("\n    <textarea");
                         buf.push(attrs({
-                            id: fieldId
+                            id: fieldId,
+                            name: field.name
                         }, {
-                            id: true
+                            id: true,
+                            name: true
                         }));
                         buf.push("></textarea>");
                     }
@@ -257,7 +269,9 @@
                                     buf.push("</option>");
                                 }
                             } else {
+                                var $l = 0;
                                 for (var $index in field.options) {
+                                    $l++;
                                     var option = field.options[$index];
                                     buf.push("\n      <option");
                                     buf.push(attrs({
