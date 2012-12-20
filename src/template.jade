@@ -8,7 +8,10 @@ form(id = ifDef(id) + '_form')
       if (field.label)
         label(for=fieldId)= field.label
       if (field.textarea)
-        textarea(id = fieldId)
+        textarea(
+          id = fieldId,
+          name = field.name
+        )
       if (field.input)
         input(
           id = fieldId, 
