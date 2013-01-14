@@ -10,7 +10,8 @@ form(id = ifDef(id) + '_form')
       if (field.textarea)
         textarea(
           id = fieldId,
-          name = field.name
+          name = field.name,
+          placeholder = field.placeholder,
         )
       if (field.input)
         input(
@@ -27,8 +28,8 @@ form(id = ifDef(id) + '_form')
         select(id = fieldId, name = field.name, class = field.class)
           for option in field.options
             option(value = option.val)= option.text
-      if (field.helptext)
-        p.helptext(id = fieldId + '_helptext')
+      if (field.helpText)
+        p.helpText(id = fieldId + '_helpText')= field.helpText
   .clearfix
   button.submit(type = 'submit')= (typeof submitText !== 'undefined') ? submitText : 'Submit'
   button.cancel(type = 'reset')= (typeof cancelText !== 'undefined') ? cancelText : 'Cancel'

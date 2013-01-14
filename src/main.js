@@ -1,4 +1,3 @@
-/* global ich:true */
 (function () {
   var {{{jaderuntime}}}
 
@@ -7,25 +6,25 @@
   var Reformer = function (spec) {
     var f = function () {}, // empty func
       item;
-      
+
     this.settings = {
       error: f,
       submit: f,
       reqMessage: 'This field is required',
       html5Validation: true
     };
-    
+
     this.fields = spec.fields;
     this.id = spec.id;
     this.submitText = spec.submitText;
     this.initialData = spec.data || {};
     delete spec.fields;
-    
+
     // apply options
     for (item in spec) {
       this.settings[item] = spec[item];
     }
-    
+
     // apply field options
     this.fields.forEach(function (field) {
       var def = {
@@ -40,18 +39,18 @@
         item;
       for (item in def) {
         if (!field.hasOwnProperty(item)) field[item] = def[item];
-      } 
-      
+      }
+
       // set our value if we've got one
       if (spec.data && spec.data.hasOwnProperty(field.name)) {
         field.value = field.initial = spec.data[field.name];
       } else {
         field.value = field.initial = '';
       }
-      
+
     });
   };
-  
+
   Reformer.prototype.render = function () {
     var self = this;
     if (!this.dom) {
@@ -80,17 +79,17 @@
             field.inputEl.value = field.value + '';
         }
     });
-    
+
     this.addButtonHandlers();
     return this.dom;
   };
-  
+
   Reformer.prototype.addButtonHandlers = function () {
     var self = this,
       buttons = this.dom.getElementsByTagName('button', this.dom),
       i = 0,
       l = buttons.length;
-    
+
     for (; i < l; i++) {
       buttons[i].addEventListener('click', function (e) {
         var cls = e.target.className,
@@ -112,7 +111,7 @@
       }, true);
     }
   };
-  
+
   Reformer.prototype.handleSubmit = function (e) {
     var self = this;
     if (self.settings.preSubmit) self.settings.preSubmit.call(self);
@@ -122,11 +121,11 @@
         self.settings.submit(data, self.diffData(data));
       } else {
         self.settings.error(self);
-      }  
+      }
       self.render();
     });
   };
-  
+
   Reformer.prototype.data = function () {
     var results = {};
     this.fields.forEach(function (field) {
@@ -138,7 +137,7 @@
     }
     return results;
   };
-  
+
   Reformer.prototype.diffData = function (newData) {
     var orig = this.initialData,
       diff = {},
@@ -151,7 +150,7 @@
     }
     return changed ? diff : undefined;
   };
-  
+
   // this way we just store the value in memory away from the dom
   // then we can re-render whenever we want, without losing the value
   Reformer.prototype.handleInputChange =  function (e) {
@@ -167,7 +166,7 @@
       }
     }();
   };
-  
+
   Reformer.prototype.clearAll = function () {
     this.fields.forEach(function (field) {
       field.inputEl.value = '';
@@ -175,11 +174,11 @@
     });
     return true;
   };
-  
+
   Reformer.prototype.validate = function (cb) {
     var self = this,
       isValid = true;
-    
+
     // async loop for each field
     this.asyncForEach(this.fields, function (field, fieldLoopCb) {
       var tests = field.tests instanceof Array ? field.tests : [field.tests];
@@ -188,13 +187,13 @@
         isValid = false;
         field.errors.push(field.reqMessage || self.settings.reqMessage);
       }
-      
+
       // html5 error message handling
       if (self.settings.html5Validation && field.inputEl.validationMessage) {
         isValid = false;
         field.errors.push(field.inputEl.validationMessage);
       }
-      
+
       // async loop for each test
       self.asyncForEach(tests, function (test, loopCb) {
         var passed = false;
@@ -214,7 +213,7 @@
             passed = test.test.call(self, field.value, self);
             if (!passed) {
               isValid = false;
-              field.errors.push(test.message); 
+              field.errors.push(test.message);
             }
             loopCb(null, passed);
           }
@@ -224,7 +223,7 @@
       cb(isValid);
     });
   };
-  
+
   Reformer.prototype.storeDomRef = function () {
     var self = this;
     this.fields.forEach(function (field) {
@@ -233,13 +232,13 @@
       field.labelEl = self.dom.querySelector('label[for="'+ field.id +'"]');
     });
   };
-  
+
   Reformer.prototype.domify = function (str) {
     var div = document.createElement('div');
     div.innerHTML = str;
     return div.querySelector('form');
   };
-  
+
   // from caolan's async.js lib
   // async.forEach method
   Reformer.prototype.asyncForEach = function (arr, iterator, cb) {
@@ -259,9 +258,9 @@
       });
     });
   };
-  
+
   Reformer.prototype.submitRe = /(^|\s)submit(\s|$)/;
   Reformer.prototype.cancelRe = /(^|\s)cancel(\s|$)/;
-  
+
   window.Reformer = Reformer;
 })(window);
