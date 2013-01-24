@@ -4,320 +4,310 @@
   var trim = ''.trim || function () {};
 
   var template = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        var __indent = [];
-        var ifDef = function(thing) {
-            return typeof thing !== "undefined" ? thing : "";
-        };
-        buf.push("\n<form");
-        buf.push(attrs({
-            id: ifDef(id) + "_form"
-        }, {
+  attrs = attrs || jade.attrs;
+  escape = escape || jade.escape;
+  rethrow = rethrow || jade.rethrow;
+  merge = merge || jade.merge;
+  var buf = [];
+  with (locals || {}) {
+    var interp;
+    var __indent = [];
+    var ifDef = function(thing) {
+      return typeof thing !== "undefined" ? thing : "";
+    };
+    buf.push("\n<form");
+    buf.push(attrs({
+      id: ifDef(id) + "_form"
+    }, {
+      id: true
+    }));
+    buf.push(">");
+    (function() {
+      if ("number" == typeof fields.length) {
+        for (var $index = 0, $l = fields.length; $index < $l; $index++) {
+          var field = fields[$index];
+          var fieldId = typeof field.id !== "undefined" ? field.id : field.name;
+          buf.push("\n  <div");
+          buf.push(attrs({
+            id: fieldId + "_parent",
+            "class": "fieldContainer" + " " + "clearfix"
+          }, {
             id: true
-        }));
-        buf.push(">");
-        (function() {
-            if ("number" == typeof fields.length) {
-                for (var $index = 0, $l = fields.length; $index < $l; $index++) {
-                    var field = fields[$index];
-                    var fieldId = typeof field.id !== "undefined" ? field.id : field.name;
-                    buf.push("\n  <div");
-                    buf.push(attrs({
-                        id: fieldId + "_parent",
-                        "class": "fieldContainer" + " " + "clearfix"
-                    }, {
-                        id: true
-                    }));
-                    buf.push(">");
-                    (function() {
-                        if ("number" == typeof field.errors.length) {
-                            for (var $index = 0, $l = field.errors.length; $index < $l; $index++) {
-                                var error = field.errors[$index];
-                                buf.push('<span class="error">');
-                                var __val__ = error;
-                                buf.push(null == __val__ ? "" : __val__);
-                                buf.push("</span>");
-                            }
-                        } else {
-                            for (var $index in field.errors) {
-                                var error = field.errors[$index];
-                                buf.push('<span class="error">');
-                                var __val__ = error;
-                                buf.push(null == __val__ ? "" : __val__);
-                                buf.push("</span>");
-                            }
-                        }
-                    }).call(this);
-                    if (field.label) {
-                        buf.push("\n    <label");
-                        buf.push(attrs({
-                            "for": fieldId
-                        }, {
-                            "for": true
-                        }));
-                        buf.push(">");
-                        var __val__ = field.label;
-                        buf.push(escape(null == __val__ ? "" : __val__));
-                        buf.push("</label>");
-                    }
-                    if (field.textarea) {
-                        buf.push("\n    <textarea");
-                        buf.push(attrs({
-                            id: fieldId,
-                            name: field.name,
-                            placeholder: field.placeholder
-                        }, {
-                            id: true,
-                            name: true,
-                            placeholder: true
-                        }));
-                        buf.push(">");
-                        var __val__ = field.value;
-                        buf.push(escape(null == __val__ ? "" : __val__));
-                        buf.push("</textarea>");
-                    }
-                    if (field.input) {
-                        buf.push("\n    <input");
-                        buf.push(attrs({
-                            id: fieldId,
-                            min: ifDef(field.min),
-                            max: typeof field.max !== "undefined" ? max : null,
-                            step: typeof field.step !== "undefined" ? step : null,
-                            placeholder: field.placeholder,
-                            type: field.type,
-                            name: field.name,
-                            value: field.value
-                        }, {
-                            id: true,
-                            min: true,
-                            max: true,
-                            step: true,
-                            placeholder: true,
-                            type: true,
-                            name: true,
-                            value: true
-                        }));
-                        buf.push("/>");
-                    }
-                    if (field.select) {
-                        buf.push("\n    <select");
-                        buf.push(attrs({
-                            id: fieldId,
-                            name: field.name,
-                            "class": field.class
-                        }, {
-                            id: true,
-                            name: true,
-                            "class": true
-                        }));
-                        buf.push(">");
-                        (function() {
-                            if ("number" == typeof field.options.length) {
-                                for (var $index = 0, $l = field.options.length; $index < $l; $index++) {
-                                    var option = field.options[$index];
-                                    buf.push("\n      <option");
-                                    buf.push(attrs({
-                                        value: option.val
-                                    }, {
-                                        value: true
-                                    }));
-                                    buf.push(">");
-                                    var __val__ = option.text;
-                                    buf.push(escape(null == __val__ ? "" : __val__));
-                                    buf.push("</option>");
-                                }
-                            } else {
-                                for (var $index in field.options) {
-                                    var option = field.options[$index];
-                                    buf.push("\n      <option");
-                                    buf.push(attrs({
-                                        value: option.val
-                                    }, {
-                                        value: true
-                                    }));
-                                    buf.push(">");
-                                    var __val__ = option.text;
-                                    buf.push(escape(null == __val__ ? "" : __val__));
-                                    buf.push("</option>");
-                                }
-                            }
-                        }).call(this);
-                        buf.push("\n    </select>");
-                    }
-                    if (field.helpText) {
-                        buf.push("\n    <p");
-                        buf.push(attrs({
-                            id: fieldId + "_helpText",
-                            "class": "helpText"
-                        }, {
-                            id: true
-                        }));
-                        buf.push(">");
-                        var __val__ = field.helpText;
-                        buf.push(escape(null == __val__ ? "" : __val__));
-                        buf.push("</p>");
-                    }
-                    buf.push("\n  </div>");
-                }
+          }));
+          buf.push(">");
+          (function() {
+            if ("number" == typeof field.errors.length) {
+              for (var $index = 0, $l = field.errors.length; $index < $l; $index++) {
+                var error = field.errors[$index];
+                buf.push('<span class="error">');
+                var __val__ = error;
+                buf.push(null == __val__ ? "" : __val__);
+                buf.push("</span>");
+              }
             } else {
-                for (var $index in fields) {
-                    var field = fields[$index];
-                    var fieldId = typeof field.id !== "undefined" ? field.id : field.name;
-                    buf.push("\n  <div");
-                    buf.push(attrs({
-                        id: fieldId + "_parent",
-                        "class": "fieldContainer" + " " + "clearfix"
-                    }, {
-                        id: true
-                    }));
-                    buf.push(">");
-                    (function() {
-                        if ("number" == typeof field.errors.length) {
-                            for (var $index = 0, $l = field.errors.length; $index < $l; $index++) {
-                                var error = field.errors[$index];
-                                buf.push('<span class="error">');
-                                var __val__ = error;
-                                buf.push(null == __val__ ? "" : __val__);
-                                buf.push("</span>");
-                            }
-                        } else {
-                            for (var $index in field.errors) {
-                                var error = field.errors[$index];
-                                buf.push('<span class="error">');
-                                var __val__ = error;
-                                buf.push(null == __val__ ? "" : __val__);
-                                buf.push("</span>");
-                            }
-                        }
-                    }).call(this);
-                    if (field.label) {
-                        buf.push("\n    <label");
-                        buf.push(attrs({
-                            "for": fieldId
-                        }, {
-                            "for": true
-                        }));
-                        buf.push(">");
-                        var __val__ = field.label;
-                        buf.push(escape(null == __val__ ? "" : __val__));
-                        buf.push("</label>");
-                    }
-                    if (field.textarea) {
-                        buf.push("\n    <textarea");
-                        buf.push(attrs({
-                            id: fieldId,
-                            name: field.name,
-                            placeholder: field.placeholder
-                        }, {
-                            id: true,
-                            name: true,
-                            placeholder: true
-                        }));
-                        buf.push(">");
-                        var __val__ = field.value;
-                        buf.push(escape(null == __val__ ? "" : __val__));
-                        buf.push("</textarea>");
-                    }
-                    if (field.input) {
-                        buf.push("\n    <input");
-                        buf.push(attrs({
-                            id: fieldId,
-                            min: ifDef(field.min),
-                            max: typeof field.max !== "undefined" ? max : null,
-                            step: typeof field.step !== "undefined" ? step : null,
-                            placeholder: field.placeholder,
-                            type: field.type,
-                            name: field.name,
-                            value: field.value
-                        }, {
-                            id: true,
-                            min: true,
-                            max: true,
-                            step: true,
-                            placeholder: true,
-                            type: true,
-                            name: true,
-                            value: true
-                        }));
-                        buf.push("/>");
-                    }
-                    if (field.select) {
-                        buf.push("\n    <select");
-                        buf.push(attrs({
-                            id: fieldId,
-                            name: field.name,
-                            "class": field.class
-                        }, {
-                            id: true,
-                            name: true,
-                            "class": true
-                        }));
-                        buf.push(">");
-                        (function() {
-                            if ("number" == typeof field.options.length) {
-                                for (var $index = 0, $l = field.options.length; $index < $l; $index++) {
-                                    var option = field.options[$index];
-                                    buf.push("\n      <option");
-                                    buf.push(attrs({
-                                        value: option.val
-                                    }, {
-                                        value: true
-                                    }));
-                                    buf.push(">");
-                                    var __val__ = option.text;
-                                    buf.push(escape(null == __val__ ? "" : __val__));
-                                    buf.push("</option>");
-                                }
-                            } else {
-                                for (var $index in field.options) {
-                                    var option = field.options[$index];
-                                    buf.push("\n      <option");
-                                    buf.push(attrs({
-                                        value: option.val
-                                    }, {
-                                        value: true
-                                    }));
-                                    buf.push(">");
-                                    var __val__ = option.text;
-                                    buf.push(escape(null == __val__ ? "" : __val__));
-                                    buf.push("</option>");
-                                }
-                            }
-                        }).call(this);
-                        buf.push("\n    </select>");
-                    }
-                    if (field.helpText) {
-                        buf.push("\n    <p");
-                        buf.push(attrs({
-                            id: fieldId + "_helpText",
-                            "class": "helpText"
-                        }, {
-                            id: true
-                        }));
-                        buf.push(">");
-                        var __val__ = field.helpText;
-                        buf.push(escape(null == __val__ ? "" : __val__));
-                        buf.push("</p>");
-                    }
-                    buf.push("\n  </div>");
-                }
+              for (var $index in field.errors) {
+                var error = field.errors[$index];
+                buf.push('<span class="error">');
+                var __val__ = error;
+                buf.push(null == __val__ ? "" : __val__);
+                buf.push("</span>");
+              }
             }
-        }).call(this);
-        buf.push('\n  <div class="clearfix"></div>\n  <button type="submit" class="submit">');
-        var __val__ = typeof submitText !== "undefined" ? submitText : "Submit";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</button>\n  <button type="reset" class="cancel">');
-        var __val__ = typeof cancelText !== "undefined" ? cancelText : "Cancel";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</button>\n</form>");
-    }
-    return buf.join("");
+          }).call(this);
+          if (field.label) {
+            buf.push("\n    <label");
+            buf.push(attrs({
+              "for": fieldId
+            }, {
+              "for": true
+            }));
+            buf.push(">");
+            var __val__ = field.label;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</label>");
+          }
+          if (field.textarea) {
+            buf.push("\n    <textarea");
+            buf.push(attrs({
+              id: fieldId,
+              name: field.name,
+              placeholder: field.placeholder
+            }, {
+              id: true,
+              name: true,
+              placeholder: true
+            }));
+            buf.push("></textarea>");
+          }
+          if (field.input) {
+            buf.push("\n    <input");
+            buf.push(attrs({
+              id: fieldId,
+              min: ifDef(field.min),
+              max: typeof field.max !== "undefined" ? max : null,
+              step: typeof field.step !== "undefined" ? step : null,
+              placeholder: field.placeholder,
+              type: field.type,
+              name: field.name
+            }, {
+              id: true,
+              min: true,
+              max: true,
+              step: true,
+              placeholder: true,
+              type: true,
+              name: true
+            }));
+            buf.push("/>");
+          }
+          if (field.select) {
+            buf.push("\n    <select");
+            buf.push(attrs({
+              id: fieldId,
+              name: field.name,
+              "class": field.class
+            }, {
+              id: true,
+              name: true,
+              "class": true
+            }));
+            buf.push(">");
+            (function() {
+              if ("number" == typeof field.options.length) {
+                for (var $index = 0, $l = field.options.length; $index < $l; $index++) {
+                  var option = field.options[$index];
+                  buf.push("\n      <option");
+                  buf.push(attrs({
+                    value: option.val
+                  }, {
+                    value: true
+                  }));
+                  buf.push(">");
+                  var __val__ = option.text;
+                  buf.push(escape(null == __val__ ? "" : __val__));
+                  buf.push("</option>");
+                }
+              } else {
+                for (var $index in field.options) {
+                  var option = field.options[$index];
+                  buf.push("\n      <option");
+                  buf.push(attrs({
+                    value: option.val
+                  }, {
+                    value: true
+                  }));
+                  buf.push(">");
+                  var __val__ = option.text;
+                  buf.push(escape(null == __val__ ? "" : __val__));
+                  buf.push("</option>");
+                }
+              }
+            }).call(this);
+            buf.push("\n    </select>");
+          }
+          if (field.helpText) {
+            buf.push("\n    <p");
+            buf.push(attrs({
+              id: fieldId + "_helpText",
+              "class": "helpText"
+            }, {
+              id: true
+            }));
+            buf.push(">");
+            var __val__ = field.helpText;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+          }
+          buf.push("\n  </div>");
+        }
+      } else {
+        for (var $index in fields) {
+          var field = fields[$index];
+          var fieldId = typeof field.id !== "undefined" ? field.id : field.name;
+          buf.push("\n  <div");
+          buf.push(attrs({
+            id: fieldId + "_parent",
+            "class": "fieldContainer" + " " + "clearfix"
+          }, {
+            id: true
+          }));
+          buf.push(">");
+          (function() {
+            if ("number" == typeof field.errors.length) {
+              for (var $index = 0, $l = field.errors.length; $index < $l; $index++) {
+                var error = field.errors[$index];
+                buf.push('<span class="error">');
+                var __val__ = error;
+                buf.push(null == __val__ ? "" : __val__);
+                buf.push("</span>");
+              }
+            } else {
+              for (var $index in field.errors) {
+                var error = field.errors[$index];
+                buf.push('<span class="error">');
+                var __val__ = error;
+                buf.push(null == __val__ ? "" : __val__);
+                buf.push("</span>");
+              }
+            }
+          }).call(this);
+          if (field.label) {
+            buf.push("\n    <label");
+            buf.push(attrs({
+              "for": fieldId
+            }, {
+              "for": true
+            }));
+            buf.push(">");
+            var __val__ = field.label;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</label>");
+          }
+          if (field.textarea) {
+            buf.push("\n    <textarea");
+            buf.push(attrs({
+              id: fieldId,
+              name: field.name,
+              placeholder: field.placeholder
+            }, {
+              id: true,
+              name: true,
+              placeholder: true
+            }));
+            buf.push("></textarea>");
+          }
+          if (field.input) {
+            buf.push("\n    <input");
+            buf.push(attrs({
+              id: fieldId,
+              min: ifDef(field.min),
+              max: typeof field.max !== "undefined" ? max : null,
+              step: typeof field.step !== "undefined" ? step : null,
+              placeholder: field.placeholder,
+              type: field.type,
+              name: field.name
+            }, {
+              id: true,
+              min: true,
+              max: true,
+              step: true,
+              placeholder: true,
+              type: true,
+              name: true
+            }));
+            buf.push("/>");
+          }
+          if (field.select) {
+            buf.push("\n    <select");
+            buf.push(attrs({
+              id: fieldId,
+              name: field.name,
+              "class": field.class
+            }, {
+              id: true,
+              name: true,
+              "class": true
+            }));
+            buf.push(">");
+            (function() {
+              if ("number" == typeof field.options.length) {
+                for (var $index = 0, $l = field.options.length; $index < $l; $index++) {
+                  var option = field.options[$index];
+                  buf.push("\n      <option");
+                  buf.push(attrs({
+                    value: option.val
+                  }, {
+                    value: true
+                  }));
+                  buf.push(">");
+                  var __val__ = option.text;
+                  buf.push(escape(null == __val__ ? "" : __val__));
+                  buf.push("</option>");
+                }
+              } else {
+                for (var $index in field.options) {
+                  var option = field.options[$index];
+                  buf.push("\n      <option");
+                  buf.push(attrs({
+                    value: option.val
+                  }, {
+                    value: true
+                  }));
+                  buf.push(">");
+                  var __val__ = option.text;
+                  buf.push(escape(null == __val__ ? "" : __val__));
+                  buf.push("</option>");
+                }
+              }
+            }).call(this);
+            buf.push("\n    </select>");
+          }
+          if (field.helpText) {
+            buf.push("\n    <p");
+            buf.push(attrs({
+              id: fieldId + "_helpText",
+              "class": "helpText"
+            }, {
+              id: true
+            }));
+            buf.push(">");
+            var __val__ = field.helpText;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+          }
+          buf.push("\n  </div>");
+        }
+      }
+    }).call(this);
+    buf.push('\n  <div class="clearfix"></div>\n  <button type="submit" class="submit">');
+    var __val__ = typeof submitText !== "undefined" ? submitText : "Submit";
+    buf.push(escape(null == __val__ ? "" : __val__));
+    buf.push('</button>\n  <button type="reset" class="cancel">');
+    var __val__ = typeof cancelText !== "undefined" ? cancelText : "Cancel";
+    buf.push(escape(null == __val__ ? "" : __val__));
+    buf.push("</button>\n</form>");
+  }
+  return buf.join("");
 }
 
   var Reformer = function (spec) {
@@ -392,9 +382,7 @@
     }
     this.storeDomRef();
     this.fields.forEach(function (field) {
-        if (field.type === 'select' && field.value) {
-            field.inputEl.value = field.value + '';
-        }
+      field.inputEl.value = (field.value || '') + '';
     });
 
     this.addButtonHandlers();
@@ -433,13 +421,13 @@
     var self = this;
     if (self.settings.preSubmit) self.settings.preSubmit.call(self);
     this.validate(function (valid) {
+      self.render();
       if (valid) {
         var data = self.data();
         self.settings.submit(data, self.diffData(data));
       } else {
         self.settings.error(self);
       }
-      self.render();
     });
   };
 
@@ -447,7 +435,7 @@
     var results = {};
     this.fields.forEach(function (field) {
       // trim if setting and available for brower and value type
-      results[field.name] = (field.trim) ? trim(field.value) : field.value;
+      results[field.name] = (field.trim) ? trim.call(field.value || '') : field.value;
     });
     if (this.settings.clean) {
       results = this.settings.clean(results);
@@ -472,7 +460,10 @@
   // then we can re-render whenever we want, without losing the value
   Reformer.prototype.handleInputChange =  function (e) {
     var target = e.target,
-      type = target.field.type;
+      type = target.field && target.field.type;
+    // the button is an input too with no field so
+    // we protect agains that.
+    if (!type) return;
     target.field.value = function () {
       if (['range', 'number'].indexOf(type) !== -1) {
           return target.valueAsNumber;

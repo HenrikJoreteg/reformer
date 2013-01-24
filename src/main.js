@@ -77,9 +77,7 @@
     }
     this.storeDomRef();
     this.fields.forEach(function (field) {
-        if (field.type === 'select' && field.value) {
-            field.inputEl.value = field.value + '';
-        }
+      field.inputEl.value = (field.value || '') + '';
     });
 
     this.addButtonHandlers();
@@ -118,13 +116,13 @@
     var self = this;
     if (self.settings.preSubmit) self.settings.preSubmit.call(self);
     this.validate(function (valid) {
+      self.render();
       if (valid) {
         var data = self.data();
         self.settings.submit(data, self.diffData(data));
       } else {
         self.settings.error(self);
       }
-      self.render();
     });
   };
 
@@ -132,7 +130,7 @@
     var results = {};
     this.fields.forEach(function (field) {
       // trim if setting and available for brower and value type
-      results[field.name] = (field.trim) ? trim(field.value) : field.value;
+      results[field.name] = (field.trim) ? trim.call(field.value || '') : field.value;
     });
     if (this.settings.clean) {
       results = this.settings.clean(results);
@@ -157,7 +155,10 @@
   // then we can re-render whenever we want, without losing the value
   Reformer.prototype.handleInputChange =  function (e) {
     var target = e.target,
-      type = target.field.type;
+      type = target.field && target.field.type;
+    // the button is an input too with no field so
+    // we protect agains that.
+    if (!type) return;
     target.field.value = function () {
       if (['range', 'number'].indexOf(type) !== -1) {
           return target.valueAsNumber;

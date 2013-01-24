@@ -12,7 +12,7 @@ form(id = ifDef(id) + '_form')
           id = fieldId,
           name = field.name,
           placeholder = field.placeholder
-        )= field.value
+        )
       if (field.input)
         input(
           id = fieldId, 
@@ -21,8 +21,7 @@ form(id = ifDef(id) + '_form')
           step = (typeof field.step !== 'undefined') ? step : null,
           placeholder = field.placeholder,
           type = field.type,
-          name = field.name,
-          value = field.value
+          name = field.name
         )
       if (field.select)
         select(id = fieldId, name = field.name, class = field.class)

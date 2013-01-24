@@ -8,7 +8,7 @@ var jade = require('jade'),
 
 function beautify(code) {
     var ast = uglify.parser.parse(code);
-    return uglify.uglify.gen_code(ast, {beautify: true});
+    return uglify.uglify.gen_code(ast, {beautify: true, indent_level: 2});
 }
 
 var jadeRuntime;
