@@ -24,6 +24,26 @@ var f = new Reformer({
         }
       ],
       required: true
+    },
+    {
+      name: 'description',
+      label: 'Description',
+      widget: 'textarea',
+      tests: [
+        {
+          test: function (val) {
+            return false;
+          },
+          message: 'something will always go wrong'
+        },
+        {
+          test: function (val) {
+            return val && val.toString().length > 2;
+          },
+          message: 'Must be at least three characters.'
+        }
+      ],
+      required: true
     }
   ],
   submit: function (vals) {

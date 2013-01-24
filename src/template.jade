@@ -11,8 +11,8 @@ form(id = ifDef(id) + '_form')
         textarea(
           id = fieldId,
           name = field.name,
-          placeholder = field.placeholder,
-        )
+          placeholder = field.placeholder
+        )= field.value
       if (field.input)
         input(
           id = fieldId, 

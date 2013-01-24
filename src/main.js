@@ -1,6 +1,8 @@
 (function () {
   var {{{jaderuntime}}}
 
+  var trim = ''.trim || function () {};
+
   var template = {{{templatefunc}}}
 
   var Reformer = function (spec) {
@@ -130,7 +132,7 @@
     var results = {};
     this.fields.forEach(function (field) {
       // trim if setting and available for brower and value type
-      results[field.name] = (field.trim && field.value.trim) ? field.value.trim() : field.value;
+      results[field.name] = (field.trim) ? trim(field.value) : field.value;
     });
     if (this.settings.clean) {
       results = this.settings.clean(results);
@@ -155,7 +157,7 @@
   // then we can re-render whenever we want, without losing the value
   Reformer.prototype.handleInputChange =  function (e) {
     var target = e.target,
-        type = target.field.type;
+      type = target.field.type;
     target.field.value = function () {
       if (['range', 'number'].indexOf(type) !== -1) {
           return target.valueAsNumber;

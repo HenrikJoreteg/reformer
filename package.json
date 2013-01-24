@@ -1,6 +1,6 @@
 {
     "name": "reformer",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Henrik Joreteg <henrik@andyet.net>",
     "description": "Self-contained, self-rendering, self-validating forms that can only output valid data.",
     "dependencies": {
