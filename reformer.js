@@ -30,9 +30,10 @@
           buf.push("\n  <div");
           buf.push(attrs({
             id: fieldId + "_parent",
-            "class": "fieldContainer" + " " + "clearfix"
+            "class": "fieldContainer clearfix" + (field.errors.length ? " error" : "")
           }, {
-            id: true
+            id: true,
+            "class": true
           }));
           buf.push(">");
           (function() {
@@ -167,9 +168,10 @@
           buf.push("\n  <div");
           buf.push(attrs({
             id: fieldId + "_parent",
-            "class": "fieldContainer" + " " + "clearfix"
+            "class": "fieldContainer clearfix" + (field.errors.length ? " error" : "")
           }, {
-            id: true
+            id: true,
+            "class": true
           }));
           buf.push(">");
           (function() {

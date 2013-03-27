@@ -2,7 +2,7 @@
 form(id = ifDef(id) + '_form')
   for field in fields
     - var fieldId = (typeof field.id !== 'undefined') ? field.id : field.name
-    div.fieldContainer.clearfix(id = fieldId + '_parent')
+    div(id = fieldId + '_parent', class="fieldContainer clearfix" + (field.errors.length ? ' error' : ''))
       for error in field.errors
         span.error!= error
       if (field.label)
