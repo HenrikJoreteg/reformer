@@ -138,7 +138,7 @@ function Reformer(spec) {
         field.parent = self;
         self.fields.push(new Field(field));
     });
-};
+}
 
 Reformer.prototype.render = function (opts) {
     var self = this;

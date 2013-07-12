@@ -1,6 +1,6 @@
 {
     "name": "reformer",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Henrik Joreteg <henrik@andyet.net>",
     "description": "Super customizable, Self-contained, self-rendering, self-validating forms that can only output valid data.",
     "dependencies": {
@@ -8,7 +8,8 @@
     },
     "devDependencies": {
         "templatizer": "0.0.12",
-        "browserify": "2.25.0"
+        "browserify": "2.25.0",
+        "uglify-js": "2.3.6"
     },
     "repository": {
         "type": "git",
