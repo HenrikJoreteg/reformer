@@ -6,8 +6,6 @@ Self-contained, self-rendering, self-validating forms that can only output valid
 
 ```javascript
 var f = new Reformer({
-  formEl: document.getElementById('myform'),
-  fieldContainer: document.getElementById('fieldContainer'),
   fields: [
     {
       name: 'first_name',
@@ -49,7 +47,11 @@ var f = new Reformer({
    
 ```javascript 
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('#something').appendChild(f.render());
+  // render our form from about, just tell it where.
+  f.render({
+    formEl: document.getElementById('myform'),
+    fieldContainer: document.getElementById('fieldContainer'),
+  });
 });
 ```
 

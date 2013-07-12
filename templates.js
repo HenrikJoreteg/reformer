@@ -123,6 +123,15 @@ exports.field = function anonymous(locals) {
     return buf.join("");
 };
 
+// form.jade compiled template
+exports.form = function anonymous(locals) {
+    var buf = [];
+    with (locals || {}) {
+        buf.push('<form><div class="fields"></div><button type="submit">Submit</button><button type="reset">Cancel</button></form>');
+    }
+    return buf.join("");
+};
+
 
 // attach to window or export with commonJS
 if (typeof module !== "undefined") {

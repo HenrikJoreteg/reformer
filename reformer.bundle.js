@@ -140,8 +140,12 @@ function Reformer(spec) {
     });
 };
 
-Reformer.prototype.render = function () {
+Reformer.prototype.render = function (opts) {
     var self = this;
+    var options = opts || {};
+
+    if (options.formEl) this.formEl = options.formEl;
+    if (options.fieldContainer) this.fieldContainer = options.fieldContainer;
 
     if (!this.rendered) {
         this.formEl.addEventListener('submit', function (e) {
@@ -301,6 +305,11 @@ function Field(opts) {
 Field.prototype.render = function () {
     var newEl = domify(templates.field({field: this}));
     var parentNode;
+
+    // if we got a string go find that id
+    if (typeof this.fieldContainer === 'string') {
+        this.fieldContainer = this.parent.formEl.querySelector('#' + this.fieldContainer);
+    }
 
     // handles first render if not passed a container
     if (!this.fieldContainer) {
@@ -534,6 +543,15 @@ exports.field = function anonymous(locals) {
             }) + ">" + jade.escape(null == (jade.interp = field.helpText) ? "" : jade.interp) + "</p>");
         }
         buf.push("</div>");
+    }
+    return buf.join("");
+};
+
+// form.jade compiled template
+exports.form = function anonymous(locals) {
+    var buf = [];
+    with (locals || {}) {
+        buf.push('<form><div class="fields"></div><button type="submit">Submit</button><button type="reset">Cancel</button></form>');
     }
     return buf.join("");
 };
