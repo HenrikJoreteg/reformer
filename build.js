@@ -10,8 +10,8 @@ templatizer(__dirname + '/templates', __dirname + '/templates.js');
 
 bundle.add('./reformer.js');
 bundle.bundle({standalone: 'Reformer'}, function (err, source) {
-    var fileName = 'dist/reformer.' + config.version + '.bundle.js';
+    var fileName = 'dist/reformer.bundle.js';
     if (err) console.error(err);
     fs.writeFileSync(fileName, source);
-    fs.writeFileSync('dist/reformer.' + config.version + '.min.js', uglify.minify(fileName).code);
+    fs.writeFileSync('dist/reformer.min.js', uglify.minify(fileName).code);
 });

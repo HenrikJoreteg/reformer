@@ -134,11 +134,19 @@ Reformer.prototype.data = function () {
     var results = {};
     this.fields.forEach(function (field) {
         // trim if setting and available for brower and value type
-        results[field.name] = field.trim ? trim(field.value) : field.value;
+        results[field.name] = field.data();
     });
     if (this.settings.clean) {
         results = this.settings.clean(results);
     }
+    return results;
+};
+
+Reformer.prototype.errors = function () {
+    var results = {};
+    this.fields.forEach(function (field) {
+        if (field.errors.length) results[field.name] = field.errors;
+    });
     return results;
 };
 
@@ -155,6 +163,12 @@ Reformer.prototype.diffData = function (newData) {
     return changed ? diff : undefined;
 };
 
+// quick way to populate form for testing
+Reformer.prototype.loadDummyData = function () {
+    this.fields.forEach(function (field) {
+        if (field.dummy && !field.value) field.setValue(field.dummy);
+    });
+};
 
 Reformer.prototype.clearAll = function () {
     this.fields.forEach(function (field) {
@@ -179,6 +193,17 @@ Reformer.prototype.validate = function (cb) {
     }, function () {
         cb(isValid);
     });
+};
+
+Reformer.prototype.getField = function (name) {
+    var found;
+    this.fields.some(function (field) {
+        if (field.name === name || field.id === name) {
+            found = field;
+            return true;
+        }
+    });
+    return found;
 };
 
 Reformer.prototype.submitRe = /(^|\s)submit(\s|$)/;
@@ -218,10 +243,12 @@ function Field(opts) {
 
     // set our value if we've got one
     if (parentData && parentData.hasOwnProperty(this.name)) {
-        this.value = this.initial = parentData[this.name];
+        this.setValue(parentData[this.name]);
     } else {
-        this.value = this.initial = '';
+        this.setValue('');
     }
+
+    this.initial = this.value;
 }
 
 Field.prototype.render = function () {
@@ -250,6 +277,11 @@ Field.prototype.render = function () {
     this.inputEl.value = (this.value || '') + '';
 
     this.registerHandlers();
+
+    // call our setup function on first render
+    if (!this.rendered && this.setup) {
+        this.setup();
+    }
 
     this.rendered = true;
 };
@@ -282,6 +314,21 @@ Field.prototype.handleInputChange = function (e) {
             return inputEl.value;
         }
     }();
+};
+
+Field.prototype.setValue = function (val) {
+    if (this.inputEl) this.inputEl.value = val;
+    this.value = val;
+};
+
+Field.prototype.data = function () {
+    if (this.clean) {
+        return this.clean(this.value);
+    } else if (this.trim) {
+        return trim(this.value);
+    } else {
+        return this.value;
+    }
 };
 
 Field.prototype.validate = function (cb) {

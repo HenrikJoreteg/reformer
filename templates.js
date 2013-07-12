@@ -10,6 +10,7 @@ var jade=function(exports){Array.isArray||(Array.isArray=function(arr){return"[o
 exports.field = function anonymous(locals) {
     var buf = [];
     with (locals || {}) {
+        var hidden = field.type === "hidden";
         buf.push("<div" + jade.attrs({
             id: field.containerId,
             "class": "fieldContainer clearfix" + (field.errors.length ? " error" : "")
@@ -17,41 +18,81 @@ exports.field = function anonymous(locals) {
             id: true,
             "class": true
         }) + ">");
-        (function() {
-            var $$obj = field.errors;
-            if ("number" == typeof $$obj.length) {
-                for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
-                    var error = $$obj[$index];
-                    buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
-                }
-            } else {
-                var $$l = 0;
-                for (var $index in $$obj) {
-                    $$l++;
-                    if ($$obj.hasOwnProperty($index)) {
+        if (!field.type === "hidden") {
+            (function() {
+                var $$obj = field.errors;
+                if ("number" == typeof $$obj.length) {
+                    for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
                         var error = $$obj[$index];
                         buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
                     }
+                } else {
+                    var $$l = 0;
+                    for (var $index in $$obj) {
+                        $$l++;
+                        if ($$obj.hasOwnProperty($index)) {
+                            var error = $$obj[$index];
+                            buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                        }
+                    }
                 }
+            }).call(this);
+            if (field.label) {
+                buf.push("<label" + jade.attrs({
+                    "for": field.id
+                }, {
+                    "for": true
+                }) + ">" + jade.escape(null == (jade.interp = field.label) ? "" : jade.interp) + "</label>");
             }
-        }).call(this);
-        if (field.label) {
-            buf.push("<label" + jade.attrs({
-                "for": field.id
-            }, {
-                "for": true
-            }) + ">" + jade.escape(null == (jade.interp = field.label) ? "" : jade.interp) + "</label>");
-        }
-        if (field.textarea) {
-            buf.push("<textarea" + jade.attrs({
-                id: field.id,
-                name: field.name,
-                placeholder: field.placeholder
-            }, {
-                id: true,
-                name: true,
-                placeholder: true
-            }) + "></textarea>");
+            if (field.textarea) {
+                buf.push("<textarea" + jade.attrs({
+                    id: field.id,
+                    name: field.name,
+                    placeholder: field.placeholder
+                }, {
+                    id: true,
+                    name: true,
+                    placeholder: true
+                }) + "></textarea>");
+            }
+            if (field.select) {
+                buf.push("<select" + jade.attrs({
+                    id: field.id,
+                    name: field.name,
+                    "class": field.class
+                }, {
+                    id: true,
+                    name: true,
+                    "class": true
+                }) + ">");
+                (function() {
+                    var $$obj = field.options;
+                    if ("number" == typeof $$obj.length) {
+                        for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
+                            var option = $$obj[$index];
+                            buf.push("<option" + jade.attrs({
+                                value: option.val
+                            }, {
+                                value: true
+                            }) + ">" + jade.escape(null == (jade.interp = option.text) ? "" : jade.interp) + "</option>");
+                        }
+                    } else {
+                        var $$l = 0;
+                        for (var $index in $$obj) {
+                            $$l++;
+                            if ($$obj.hasOwnProperty($index)) {
+                                var option = $$obj[$index];
+                                buf.push("<option" + jade.attrs({
+                                    value: option.val
+                                }, {
+                                    value: true
+                                }) + ">" + jade.escape(null == (jade.interp = option.text) ? "" : jade.interp) + "</option>");
+                            }
+                        }
+                    }
+                }).call(this);
+                buf.push("</select>");
+            }
         }
         if (field.input) {
             buf.push("<input" + jade.attrs({
@@ -72,45 +113,7 @@ exports.field = function anonymous(locals) {
                 name: true
             }) + "/>");
         }
-        if (field.select) {
-            buf.push("<select" + jade.attrs({
-                id: field.id,
-                name: field.name,
-                "class": field.class
-            }, {
-                id: true,
-                name: true,
-                "class": true
-            }) + ">");
-            (function() {
-                var $$obj = field.options;
-                if ("number" == typeof $$obj.length) {
-                    for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
-                        var option = $$obj[$index];
-                        buf.push("<option" + jade.attrs({
-                            value: option.val
-                        }, {
-                            value: true
-                        }) + ">" + jade.escape(null == (jade.interp = option.text) ? "" : jade.interp) + "</option>");
-                    }
-                } else {
-                    var $$l = 0;
-                    for (var $index in $$obj) {
-                        $$l++;
-                        if ($$obj.hasOwnProperty($index)) {
-                            var option = $$obj[$index];
-                            buf.push("<option" + jade.attrs({
-                                value: option.val
-                            }, {
-                                value: true
-                            }) + ">" + jade.escape(null == (jade.interp = option.text) ? "" : jade.interp) + "</option>");
-                        }
-                    }
-                }
-            }).call(this);
-            buf.push("</select>");
-        }
-        if (field.helpText) {
+        if (field.type !== "hidden" && field.helpText) {
             buf.push("<p" + jade.attrs({
                 id: field.id + "_helpText",
                 "class": "helpText"
