@@ -6,7 +6,8 @@ Self-contained, self-rendering, self-validating forms that can only output valid
 
 ```javascript
 var f = new Reformer({
-  submitText: 'Submit this form!',
+  formEl: document.getElementById('myform'),
+  fieldContainer: document.getElementById('fieldContainer'),
   fields: [
     {
       name: 'first_name',
@@ -52,8 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 ```
 
-
-reformer will handle form submit, and call your callback if everything's happy.
+Reformer will handle form submit, and call your callback if everything's happy.
 
 ##Bonus Step #3: Asynchronous validation
 

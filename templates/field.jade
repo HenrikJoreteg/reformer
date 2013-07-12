@@ -1,0 +1,27 @@
+div(id = field.containerId, class="fieldContainer clearfix" + (field.errors.length ? ' error' : ''))
+  for error in field.errors
+    span.error!= error
+  if (field.label)
+    label(for=field.id)= field.label
+  if (field.textarea)
+    textarea(
+      id = field.id,
+      name = field.name,
+      placeholder = field.placeholder
+    )
+  if (field.input)
+    input(
+      id = field.id, 
+      min = field.get('min'), 
+      max = field.get('max'),
+      step = field.get('step'),
+      placeholder = field.get('placeholder'),
+      type = field.type,
+      name = field.name
+    )
+  if (field.select)
+    select(id = field.id, name = field.name, class = field.class)
+      for option in field.options
+        option(value = option.val)= option.text
+  if (field.helpText)
+    p.helpText(id = field.id + '_helpText')= field.helpText

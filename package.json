@@ -1,19 +1,19 @@
 {
     "name": "reformer",
-    "version": "0.0.5",
+    "version": "1.0.0",
     "author": "Henrik Joreteg <henrik@andyet.net>",
-    "description": "Self-contained, self-rendering, self-validating forms that can only output valid data.",
+    "description": "Super customizable, Self-contained, self-rendering, self-validating forms that can only output valid data.",
     "dependencies": {
-        "jade": "",
-        "uglify-js": "1.x",
-        "underscore": "",
-        "colors": "",
-        "yetify": ""
+        "domify": "1.0.0"
+    },
+    "devDependencies": {
+        "templatizer": "0.0.12",
+        "browserify": "2.25.0"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/HenrikJoreteg/reformer.git"
     },
-    "keywords": ["form", "browser", "jade"],
+    "keywords": ["form", "browser"],
     "main": "reformer.js"
 }

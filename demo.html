@@ -3,7 +3,7 @@
     <head>
         <title>Form Gen Demo</title>
         <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
-        <script src="reformer.min.js"></script>
+        <script src="reformer.bundle.js"></script>
         <script src="test.js"></script>
     </head>
     <body>
@@ -11,7 +11,17 @@
             <h1>Reformer Demo</h1>
             <p>This form is rendered entirely on the client-side by Reformer and all form behavior is managed by Reformer.</p>
             <p>I'm using twitter bootstrap to add some basic styles, but the only required HTML are the name/type/value attributes of the input variables.</p>
-            <div id="something"></div>
+            <form id="myForm">
+                <div id="fields"></div>
+                <button type="submit">Submit</button>
+            </form>
+
+            <form id="customForm">
+                <p>A form field thing here</p>
+                <div id="specialField"></div>
+                <p>Some intro text</p>
+                <button type="submit">Submit</button>
+            </form>
         </div>
     </body>
 </html>
