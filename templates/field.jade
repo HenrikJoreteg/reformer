@@ -1,6 +1,6 @@
 - var hidden = field.type === 'hidden';
 div(id = field.containerId, class="fieldContainer clearfix" + (field.errors.length ? ' error' : ''))
-  if (!field.type === 'hidden')
+  if (field.type !== 'hidden')
     for error in field.errors
       span.error!= error
     if (field.label)

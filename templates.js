@@ -18,7 +18,7 @@ exports.field = function anonymous(locals) {
             id: true,
             "class": true
         }) + ">");
-        if (!field.type === "hidden") {
+        if (field.type !== "hidden") {
             (function() {
                 var $$obj = field.errors;
                 if ("number" == typeof $$obj.length) {
