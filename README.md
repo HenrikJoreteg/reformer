@@ -98,7 +98,6 @@ Cheers,
 
  - Still needs a bit more work/polish/testing.
  - Requires IE8 or newer because I didn't want jQuery as a dependency.
- - Won't really work with checkboxes/radioboxes and such, just yet.
 
 ##License
 
