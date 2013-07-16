@@ -2,7 +2,8 @@
 div(id = field.containerId, class="fieldContainer clearfix" + (field.errors.length ? ' error' : ''))
   if (field.type !== 'hidden')
     for error in field.errors
-      span.error!= error
+      if (error)
+        span.error!= error
     if (field.label)
       label(for=field.id)= field.label
     if (field.textarea)

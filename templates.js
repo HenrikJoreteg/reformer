@@ -24,7 +24,9 @@ exports.field = function anonymous(locals) {
                 if ("number" == typeof $$obj.length) {
                     for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
                         var error = $$obj[$index];
-                        buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                        if (error) {
+                            buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                        }
                     }
                 } else {
                     var $$l = 0;
@@ -32,7 +34,9 @@ exports.field = function anonymous(locals) {
                         $$l++;
                         if ($$obj.hasOwnProperty($index)) {
                             var error = $$obj[$index];
-                            buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                            if (error) {
+                                buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                            }
                         }
                     }
                 }
