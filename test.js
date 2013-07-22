@@ -23,7 +23,8 @@ var firstForm = new Reformer({
           message: 'Must be at least three characters.'
         }
       ],
-      required: true
+      required: true,
+      errorPlacement: 'after'
     },
     {
       name: 'description',

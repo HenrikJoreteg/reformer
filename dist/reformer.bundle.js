@@ -116,7 +116,8 @@ function Reformer(spec) {
         error: f,
         submit: f,
         reqMessage: 'This field is required',
-        html5Validation: true
+        html5Validation: true,
+        errorPlacement: 'before'
     };
 
     this.fieldDefinition = spec.fields;
@@ -297,6 +298,7 @@ function Field(opts) {
     this.textarea = opts.widget === 'textarea';
     this.select = opts.widget === 'select' && opts.hasOwnProperty('options');
     this.input = opts.hasOwnProperty('widget') ? opts.widget === 'input' : true;
+    this.errorPlacement = opts.errorPlacement || opts.parent.settings.errorPlacement;
     this.trim = true;
 
     for (item in opts) {
@@ -477,19 +479,13 @@ var jade=function(exports){Array.isArray||(Array.isArray=function(arr){return"[o
 
 // create our folder objects
 
-// field.jade compiled template
-exports.field = function anonymous(locals) {
+// errors.jade compiled template
+exports.errors = function anonymous(locals) {
     var buf = [];
     with (locals || {}) {
-        var hidden = field.type === "hidden";
-        buf.push("<div" + jade.attrs({
-            id: field.containerId,
-            "class": "fieldContainer clearfix" + (field.errors.length ? " error" : "")
-        }, {
-            id: true,
-            "class": true
-        }) + ">");
-        if (field.type !== "hidden") {
+        var hasErrors = !!field.errors.length;
+        if (hasErrors) {
+            buf.push('<div class="errorContainer">');
             (function() {
                 var $$obj = field.errors;
                 if ("number" == typeof $$obj.length) {
@@ -512,6 +508,54 @@ exports.field = function anonymous(locals) {
                     }
                 }
             }).call(this);
+            buf.push("</div>");
+        }
+    }
+    return buf.join("");
+};
+
+// field.jade compiled template
+exports.field = function anonymous(locals) {
+    var buf = [];
+    with (locals || {}) {
+        var hidden = field.type === "hidden";
+        buf.push("<div" + jade.attrs({
+            id: field.containerId,
+            "class": "fieldContainer clearfix" + (field.errors.length ? " error" : "")
+        }, {
+            id: true,
+            "class": true
+        }) + ">");
+        if (field.type !== "hidden") {
+            if (field.errorPlacement === "before") {
+                var hasErrors = !!field.errors.length;
+                if (hasErrors) {
+                    buf.push('<div class="errorContainer">');
+                    (function() {
+                        var $$obj = field.errors;
+                        if ("number" == typeof $$obj.length) {
+                            for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
+                                var error = $$obj[$index];
+                                if (error) {
+                                    buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                                }
+                            }
+                        } else {
+                            var $$l = 0;
+                            for (var $index in $$obj) {
+                                $$l++;
+                                if ($$obj.hasOwnProperty($index)) {
+                                    var error = $$obj[$index];
+                                    if (error) {
+                                        buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                                    }
+                                }
+                            }
+                        }
+                    }).call(this);
+                    buf.push("</div>");
+                }
+            }
             if (field.label) {
                 buf.push("<label" + jade.attrs({
                     "for": field.id
@@ -587,6 +631,35 @@ exports.field = function anonymous(locals) {
                 type: true,
                 name: true
             }) + "/>");
+        }
+        if (field.errorPlacement === "after" && field.type !== "hidden") {
+            var hasErrors = !!field.errors.length;
+            if (hasErrors) {
+                buf.push('<div class="errorContainer">');
+                (function() {
+                    var $$obj = field.errors;
+                    if ("number" == typeof $$obj.length) {
+                        for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
+                            var error = $$obj[$index];
+                            if (error) {
+                                buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                            }
+                        }
+                    } else {
+                        var $$l = 0;
+                        for (var $index in $$obj) {
+                            $$l++;
+                            if ($$obj.hasOwnProperty($index)) {
+                                var error = $$obj[$index];
+                                if (error) {
+                                    buf.push('<span class="error">' + (null == (jade.interp = error) ? "" : jade.interp) + "</span>");
+                                }
+                            }
+                        }
+                    }
+                }).call(this);
+                buf.push("</div>");
+            }
         }
         if (field.type !== "hidden" && field.helpText) {
             buf.push("<p" + jade.attrs({

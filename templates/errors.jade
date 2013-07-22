@@ -1,0 +1,6 @@
+- var hasErrors = !!field.errors.length;
+if (hasErrors)
+  .errorContainer
+    for error in field.errors
+      if (error)
+        span.error!= error

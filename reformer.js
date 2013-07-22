@@ -38,7 +38,8 @@ function Reformer(spec) {
         error: f,
         submit: f,
         reqMessage: 'This field is required',
-        html5Validation: true
+        html5Validation: true,
+        errorPlacement: 'before'
     };
 
     this.fieldDefinition = spec.fields;
@@ -219,6 +220,7 @@ function Field(opts) {
     this.textarea = opts.widget === 'textarea';
     this.select = opts.widget === 'select' && opts.hasOwnProperty('options');
     this.input = opts.hasOwnProperty('widget') ? opts.widget === 'input' : true;
+    this.errorPlacement = opts.errorPlacement || opts.parent.settings.errorPlacement;
     this.trim = true;
 
     for (item in opts) {

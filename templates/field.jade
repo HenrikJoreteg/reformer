@@ -1,9 +1,8 @@
 - var hidden = field.type === 'hidden';
 div(id = field.containerId, class="fieldContainer clearfix" + (field.errors.length ? ' error' : ''))
   if (field.type !== 'hidden')
-    for error in field.errors
-      if (error)
-        span.error!= error
+    if (field.errorPlacement === 'before') 
+      include errors
     if (field.label)
       label(for=field.id)= field.label
     if (field.textarea)
@@ -27,6 +26,10 @@ div(id = field.containerId, class="fieldContainer clearfix" + (field.errors.leng
       type = field.type,
       name = field.name
     )
+
+  if (field.errorPlacement === 'after' && field.type !== 'hidden') 
+    include errors
+    
   
   if (field.type !== 'hidden' && field.helpText)
     p.helpText(id = field.id + '_helpText')= field.helpText
