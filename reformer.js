@@ -354,7 +354,7 @@ Field.prototype.validate = function (cb) {
     asyncForEach(tests, function (test, loopCb) {
         var passed = false;
         // if we're ignoring same values.. carry on
-        if (test.ignoreSame && self.value === self.initial) {
+        if (self.ignoreSame && self.value === self.initial) {
             loopCb(null);
         } else {
             if (test.async) {
