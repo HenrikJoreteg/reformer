@@ -354,25 +354,21 @@ Field.prototype.validate = function (cb) {
     asyncForEach(tests, function (test, loopCb) {
         var passed = false;
         // if we're ignoring same values.. carry on
-        if (self.ignoreSame && self.value === self.initial) {
-            loopCb(null);
-        } else {
-            if (test.async) {
-                test.test.call(self, self.value, self, function (passed) {
-                    if (!passed) {
-                        isValid = false;
-                        self.errors.push(test.message);
-                    }
-                    loopCb(null, passed);
-                });
-            } else {
-                passed = test.test.call(self, self.value, self);
+        if (test.async) {
+            test.test.call(self, self.value, self, function (passed) {
                 if (!passed) {
                     isValid = false;
                     self.errors.push(test.message);
                 }
                 loopCb(null, passed);
+            });
+        } else {
+            passed = test.test.call(self, self.value, self);
+            if (!passed) {
+                isValid = false;
+                self.errors.push(test.message);
             }
+            loopCb(null, passed);
         }
     }, function () {
         cb(isValid);
