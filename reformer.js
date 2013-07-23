@@ -47,7 +47,6 @@ function Reformer(spec) {
     this.id = spec.id;
     this.formEl = spec.formEl;
     this.fieldContainer = spec.fieldContainer;
-    this.submitText = spec.submitText;
     this.initialData = spec.data || {};
     delete spec.fields;
 
@@ -124,9 +123,9 @@ Reformer.prototype.handleSubmit = function (e) {
         self.render();
         if (valid) {
             var data = self.data();
-            self.settings.submit(data, self.diffData(data));
+            self.settings.submit.call(self, data, self.diffData(data));
         } else {
-            self.settings.error(self);
+            self.settings.error.call(self);
         }
     });
 };
