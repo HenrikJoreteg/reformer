@@ -4,7 +4,8 @@ var firstForm = new Reformer({
       name: 'first_name',
       label: 'First Name',
       placeholder: 'Something',
-      required: true
+      required: true,
+      autocomplete: 'off'
     },
     {
       name: 'last_name',

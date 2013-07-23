@@ -24,7 +24,8 @@ div(id = field.containerId, class="fieldContainer clearfix" + (field.errors.leng
       step = field.get('step'),
       placeholder = field.get('placeholder'),
       type = field.type,
-      name = field.name
+      name = field.name,
+      autocomplete = field.autocomplete || null
     )
 
   if (field.errorPlacement === 'after' && field.type !== 'hidden') 

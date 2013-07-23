@@ -633,7 +633,8 @@ exports.field = function anonymous(locals) {
                 step: field.get("step"),
                 placeholder: field.get("placeholder"),
                 type: field.type,
-                name: field.name
+                name: field.name,
+                autocomplete: field.autocomplete || null
             }, {
                 id: true,
                 min: true,
@@ -641,7 +642,8 @@ exports.field = function anonymous(locals) {
                 step: true,
                 placeholder: true,
                 type: true,
-                name: true
+                name: true,
+                autocomplete: true
             }) + "/>");
         }
         if (field.errorPlacement === "after" && field.type !== "hidden") {
