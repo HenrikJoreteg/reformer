@@ -62,7 +62,7 @@ function Reformer(spec) {
     });
 }
 
-Reformer.prototype.render = function (opts) {
+Reformer.prototype.render = function (opts, updateData) {
     var self = this;
     var options = opts || {};
 
@@ -81,7 +81,7 @@ Reformer.prototype.render = function (opts) {
     this.rendered = true;
 
     this.fields.forEach(function (field) {
-        field.render();
+        field.render(updateData);
     });
 
     return this.formEl;
@@ -114,6 +114,12 @@ Reformer.prototype.addButtonHandlers = function () {
             // fall through
         }, true);
     }
+};
+
+// reset the form, apply new initial data if passed
+Reformer.prototype.reset = function (data) {
+    if (data) this.initialData = data;
+    this.render({}, true);
 };
 
 Reformer.prototype.handleSubmit = function (e) {
@@ -252,7 +258,7 @@ function Field(opts) {
     this.initial = this.value;
 }
 
-Field.prototype.render = function () {
+Field.prototype.render = function (resetData) {
     var newEl = domify(templates.field({field: this}));
     var parentNode;
 
@@ -275,7 +281,12 @@ Field.prototype.render = function () {
     // store some references
     this.inputEl = this.fieldContainer.querySelector('[name="'+ this.name +'"]');
     this.labelEl = this.fieldContainer.querySelector('label[for="'+ this.id +'"]');
-    this.inputEl.value = (this.value || '') + '';
+
+    if (resetData) {
+        this.resetValue();
+    } else {
+        this.setValue(this.value);
+    }
 
     this.registerHandlers();
 
@@ -315,6 +326,12 @@ Field.prototype.handleInputChange = function (e) {
             return inputEl.value;
         }
     }();
+};
+
+Field.prototype.resetValue = function () {
+    var newVal = this.parent.initialData[this.name] || '';
+    this.setValue(newVal);
+    this.initial = newVal;
 };
 
 Field.prototype.setValue = function (val) {
